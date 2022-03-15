@@ -2,7 +2,7 @@
 
 ## <p align="center">EXAMEN Final </p>
  
-***En este repositorio se encuentra la resolución del Examen Parcial 2 de la cátedra de Bioinformática***
+***En este repositorio se encuentra la resolución del Examen Final de la cátedra de Bioinformática***
  
 ### Datos personales:
  
@@ -13,7 +13,7 @@
  
 **<p align="center"> Tena - Ecuador</p>**
  
-<p align="center"> Repositorio creado el Sábado 19, de Febrero, 2022</p>
+<p align="center"> Repositorio creado el Lunes 14, de Marzo, 2022</p>
  
 ### Características del computador:
  
