@@ -78,7 +78,12 @@ Para comprender la data de esta evaluación se requiere conocer el significado d
 ### [0.5 PUNTOS] 1.1 Defina su directorio de trabajo. 
 ```{r wd}
 
-getwd()
+#Esta funcion ayuda a irmprimir el directorio getwd()
+#Si se le añade a setwd() ayuda a definir el directorio
+def_dir <- setwd(getwd())
+
+#En consola
+print(def_dir)
 
 ```
 
@@ -106,8 +111,8 @@ library(tidyr)
 # values_to = El nuevo nombre de las columnas para los valores
 
 long_df <- function(dataframe){
-  funcion_long <- pivot_longer(df, 3:9, names_to = "Gen", 
-                          values_to = "Expresion_level")
+  funcion_long <- pivot_longer(df, 3:9, names_to = "gen", 
+                          values_to = "expresion_level")
   return(funcion_long)}
 
 
@@ -133,9 +138,6 @@ library(dplyr)
 library(sjPlot)
 library(sjmisc)
 library(sjlabelled)
-library(ggplot2)
-library(gridExtra)
-library(knitr)
 
 df_descriptive <- df_long %>% select(dataset, Gen, Expresion_level)
 
@@ -171,16 +173,34 @@ Para esta pregunta tiene que utilizar la data ```df_long```.
 ```{r}
 # Escriba el código para crear la función tcga_boxplots
 
+library(dplyr)
+
 library(ggplot2)
 
-
-
+#Se crea la funcion de resolucion
+tcga_boxplots <- function(data){
+  gen_box <- df_long %>% filter (dataset == data) %>% #filtrado de la data
+              ggplot(aes(x = gen, y = expresion_level, color = gen)) +  #Grafica de los puntos
+              geom_boxplot( color='black') + geom_jitter(color='coral2')#Boxplot y jitters
+}
 
 ```
+
 
 ### [0.5 PUNTOS] 2.2 Utilizando la función ```lapply()``` genera la lista ```cancertype_boxplots``` con las gráficas para cada tipo de cancer (cada tipo de dataset). 
 ```{r list_boxplots}
 # Escriba el código para generar la lista. 
+
+unicos1 <- unique(df_long$dataset)
+
+print("Los tipos de cancer son:")
+unicos1
+
+cancertype_boxplots <- lapply(unicos1, tcga_boxplots)
+
+cancertype_boxplots
+
+cancertype_boxplots[[3]]
 
 
 ```
