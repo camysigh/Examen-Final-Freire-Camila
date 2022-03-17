@@ -209,6 +209,17 @@ cancertype_boxplots[[3]]
 ```{r boxplot3}
 # Escriba el código para guardar la tercera figura de la lista. 
 
+ggsave("results/boxplot3.png",
+        plot = cancertype_boxplots[[3]],
+        device = NULL,
+        path = NULL,
+        scale = 1,
+        width = NA,
+        height = NA,
+        dpi = 300,
+        limitsize = TRUE,
+        bg = NULL)
+
 
 ```
 
@@ -218,6 +229,21 @@ cancertype_boxplots[[3]]
 ```{r reg_gen_exp}
 # Escriba aquí su función reg_gen_expression
 
+genes_cancer <- cancertype_boxplots[[3]]
+
+reg_gen_expression <- function(genes_cancer){
+  comparacion_gen_1 = genes_cancer[1]
+  comparacion_gen_2 = genes_cancer[2]
+  filtro_comparacion_gen_1 <- df_long %>% filter (gen == comparacion_gen_1)
+  filtro_comparacion_gen_2 <- df_long %>% filter (gen == comparacion_gen_2)
+  filtro_comparacion_gen_Total <- cbind(filtro_comparacion_gen_1,filtro_comparacion_gen_2)
+  filtro_comparacion_gen_Total_tibble <- tibble("dataset" = filtro_comparacion_gen_Total[,1], "gen1" = filtro_comparacion_gen_Total[,3], "gen2" = filtro_comparacion_gen_Total[,6])
+  gen_box_reg <- filtro_comparacion_gen_Total_tibble %>% 
+                ggplot(aes(x = gen1, y = gen2, color = dataset)) + 
+                geom_point(size = 2) + 
+                geom_smooth(method = lm, formula = y~x, se = FALSE)
+  gen_box_reg
+}
 
 ```
 
@@ -226,12 +252,45 @@ cancertype_boxplots[[3]]
 ```{r list_regplots}
 # Escriba el código para generar la lista. 
 
+
+unicos2 <- unique(df_long$gen)
+
+#Lista de genes
+print("Los genes son:")
+unicos2
+
+#Funcion combinacion sin repeticion
+
+unicos2_combinacion <- combn(unicos2,m = 2,simplify = FALSE)
+
+#Las combinaciones sin repetir
+print (paste("El número de combinaciones sin repetir es: ", length(unicos2_combinacion)))
+
+reg_genplots <- lapply(unicos2_combinacion,reg_gen_expression)
+
+#Todos las regresiones
+reg_genplots
+
+#Solo la regresión onceva
+reg_genplots[[11]]
+
 ```
 
 
 ### [0.5 PUNTOS] 2.6. Guarde en el subdirectorio ```result``` el onceavo plot de la lista ```reg_genplots``` con el nombre ```regresion11.pdf```. La definición de a figura debe ser de 300dpi. 
 ```{r reg11}
 # Escriba el código para guardar el onceavo plot. 
+
+ggsave("results/regresion11.pdf",
+        plot = reg_genplots[[11]],
+        device = NULL,
+        path = NULL,
+        scale = 1,
+        width = NA,
+        height = NA,
+        dpi = 300,
+        limitsize = TRUE,
+        bg = NULL)
 
 ```
 
