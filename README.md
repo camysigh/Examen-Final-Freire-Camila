@@ -28,7 +28,6 @@
 - RStusio
  
 #### **Versión de R:**
-- version 3.6.3
-- 
+- Version 3.6.3
 ### Explicación de la data utilizada:
 - Se ha empleado la tabla que se puede encontrar en la carpeta data con el nombre **mRNA_expr.csv**, la cual contiene una serie de diferentes tipos de cancer, mismos que poseen niveles de expresión para 7 tipos de genes. 
