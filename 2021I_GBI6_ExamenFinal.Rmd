@@ -14,7 +14,7 @@ output:
       smooth_scroll: yes
 ---
 
-![](./img/ikiam.png)
+
 
 **Bienvenidos al examen final de GBI6 - Bioinformática.**
 
@@ -168,15 +168,12 @@ descr(
 ### [0.5 PUNTOS] 1.6 Interprete los resultados de la tabla resultante de la sección 1.5. 
 
 
-```{tex}
-
 Como se puede observar el documento precargado anteriormente, se generaron las tablas descriptivas para cada gen, deacuerdo al tipo de cancer. En cuanto al carcinoma invasivo de mama (BRCA), se puede visualizar que en el mismo, el gen que se expresa mayormente es GATA3. Por otra parte, en el cancer Cohorte pan-riñón (KICH+KIRC+KIRP), tambien conocido por sus siglas (KIPAN), este presenta un mayor nivel de expresión para el gen PTEN, demostrando una media de 0.72. Igualmente, en el caso del cancer KIRP (Carcinoma renal de células papilares renales), en este usualmente, se expresa con mayor frecuencia el mismo gen ya mencionado. 
 
 Por otra parte, para el gen LUSC (Carcinoma de células escamosas de pulmón), este posee un nivel de expresión mayor, cuando se habla del gen MUC1, ya que el mismo presenta una media de 0.56. Mismo caso ocurren en el cancer (OV), donde su media es de 2.27. 
 
 Finalmente, para el cancer UCEC (Carcinoma de endometrio del cuerpo uterino), el gen que se expresa con mayor frecuencia es ESR1
 
-```
 
 ## **Pregunta 2 VISUALIZACION DE DATOS  [5 PUNTOS]**
 
@@ -334,18 +331,17 @@ ggsave("results/regresion11.pdf",
 
 ### [1 PUNTO] 2.7. Interprete los resultados de las figuras ```boxplot3.png``` y ```regresion11.pdf```.
 
-```{tex}
 
-INTERPRETACION DE BOXPLOT 3:
+
+**INTERPRETACION DE BOXPLOT 3:**
 
   Cada uno de estos boxplots muestran una línea gruesa central, la cual representa la media. Lo que pudo a su vez, tambien visualizarse en la tabla creada previamente. Como se verifica el gen que presenta mayor expresión es MUC1. Cuya caja de bigotes muestra asimetría positiva, ya que la línea de la media se encuenra cerca de la parte superior de la gráfica. Por otra parte cada punto que se encuentran sobre y alrededor de las cajas representan cada una de las observaciones. Por lo que, esto nos ayuda a comprender de mejor manera los datos dados.  
 
-INTERPRETACION DE LA GRÁFICA DE REGRECION 3:
+**INTERPRETACION DE LA GRÁFICA DE REGRECION 3:**
   
 Como se observa en la gŕafica, el gen1, presenta expresiones similares en relación al gen dos. Además ambos se expresan en su mayoría en el cancer LUSC. 
 
 
-```
 
 ## 3. CONTROL DE LA VERSIÓN [1 PUNTO]. Se verficará en ell repositorio de GitHub. 
 
