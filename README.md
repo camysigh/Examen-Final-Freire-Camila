@@ -25,14 +25,9 @@
  
 ### Programas utilizados:
  
--
+- RStudio
  
-### Versión de Python/Anaconda y de cada uno de los módulos/paquetes y utilizados:
- 
-#### **Versión de R:** 
-- 
-#### **Versión Módulos/paquetes utilizados:**
- -
+#### **Versión de R:**
+- Version 3.6.3
 ### Explicación de la data utilizada:
- 
-- 
+- Se ha empleado la tabla que se puede encontrar en la carpeta data con el nombre **mRNA_expr.csv**, la cual contiene una serie de diferentes tipos de cancer, mismos que poseen niveles de expresión para 7 tipos de genes. 
