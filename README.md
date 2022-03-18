@@ -25,7 +25,7 @@
  
 ### Programas utilizados:
  
-- RStusio
+- RStudio
  
 #### **Versión de R:**
 - Version 3.6.3
