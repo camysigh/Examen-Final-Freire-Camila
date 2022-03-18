@@ -147,21 +147,19 @@ library(sjlabelled)
 
 # Se selecciona las celdas con las que se va  a trabajar, %>% es similar a +
 
-df_descriptive <- df_long %>% select(dataset, gen, expresion_level)
+df_descriptive <- df_long %>% group_by(dataset, gen)
 
-# A continuacion, para la descriptive table se emplea la función tab_df - 
-# empleada para generar tablas a partir de un dataframe
+# A continuacion, para la descriptive table se emplea la función descr - 
+# que permite hacer una tabla descriptiva sencilla
 
-tab_df(
+descr(
   df_descriptive,
-  title = "Table 1. RNA Summary", # Titulo de la tabla
-  footnote = "Expression of mRNA", # Pie de nota de la tabla
-  show.type = FALSE, # Agrega información acerca del tipo de variable 
-                     # de la columna
-  show.rownames = FALSE, # Para añadir una columna con el nombre de columna del 
-                         # data frame
-  show.footnote = TRUE, # Muestra el pie de nota
-  digits = 2, # Los valores de la tabla son redondiados a 2 decimales
+  max.length = NULL,
+  weights = NULL,
+  show = "all", # Character vector, indicating which information (columns) 
+                # that describe the data should be returned.
+  out = "browser",
+  encoding = "UTF-8",
   file ="results/mRNA_expr_summary.doc") # Para guardar la tabla en cualquier 
                                          # formato, en este caso .doc
 
@@ -172,6 +170,10 @@ tab_df(
 
 ```{tex}
 # Escriba aquí su interpretación 
+
+Como se puede observar el la **Tabla 1**, para todos los 7 genes dados, (es decir: *GATA3, PTEN, XBP1, ESR1, MUC1, FN1, y GAPDH*),  poseen una cantidad asignada de un nivel de expresión, para todo los tipos de Cancer presentes: *BRCA, OV, LUSC, KIPAN, KIRP, UCEC*. <br>
+
+En cuanto al carcinoma ivasivo de mama (BRCA, por sus siglas en inglés), como se puede  observar en las tablas
 
 ```
 
