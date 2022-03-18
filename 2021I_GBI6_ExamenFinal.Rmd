@@ -78,20 +78,22 @@ Para comprender la data de esta evaluación se requiere conocer el significado d
 ### [0.5 PUNTOS] 1.1 Defina su directorio de trabajo. 
 ```{r wd}
 
-#Esta funcion ayuda a irmprimir el directorio getwd()
-#Si se le añade a setwd() ayuda a definir el directorio
+#getwd -> Irmprime el directorio actual
+#setwd -> Define el directorio
 def_dir <- setwd(getwd())
 
-#En consola
 print(def_dir)
 
 ```
 
 ### [0.5 PUNTOS] 1.2. Cargue la data "mRNA_expr.csv"
 ```{r data}
+
+#Lectura del achivo donde esta la base de datos:
 df <- read.csv("data/mRNA_expr.csv")
 
-print(df) 
+#Se imprime las 10 primeras filas de la base de datos
+head(df, n=10)
 
 ```
 
@@ -124,9 +126,11 @@ La tabla resultante tendrá tres columnas: ```dataset, gen, expresion_level```.
 ```{r df_long}
 # Genere la data df_long 
 
-df_long <- long_df(df)[,2:4]
+df_long <- long_df(df)[,2:4] # long_df(df)[,2:4], tomara los valores de: 
+                             # dataset, gen, expresion_level
 
-print(df_long)
+# Se imprime las primeras 10 filas del nuevo data frame - 3 columnas
+head(df_long, n=10)
 
 ```
 
@@ -134,25 +138,32 @@ print(df_long)
 ```{r desc_table}
 # Escriba el código para crear el Descriptive table 
 
+#Librerias ocupadas para crear el Descriptive table
+
 library(dplyr)
 library(sjPlot)
 library(sjmisc)
 library(sjlabelled)
 
-df_descriptive <- df_long %>% select(dataset, Gen, Expresion_level)
+# Se selecciona las celdas con las que se va  a trabajar, %>% es similar a +
 
-#tab_df(df_descriptive, alternate.rows = TRUE, title = "Table 1. RNA Summary", show.footnote = TRUE, footnote = "Expression of mRNA", file = "mRNA_expr_summary.doc")
+df_descriptive <- df_long %>% select(dataset, gen, expresion_level)
+
+# A continuacion, para la descriptive table se emplea la función tab_df - 
+# empleada para generar tablas a partir de un dataframe
 
 tab_df(
   df_descriptive,
-  title = "Table 1. RNA Summary",
-  footnote = "Expression of mRNA",
-  show.type = FALSE,
-  show.rownames = FALSE,
-  show.footnote = TRUE,
-  digits = 2,
-  file ="results/mRNA_expr_summary.doc")
-
+  title = "Table 1. RNA Summary", # Titulo de la tabla
+  footnote = "Expression of mRNA", # Pie de nota de la tabla
+  show.type = FALSE, # Agrega información acerca del tipo de variable 
+                     # de la columna
+  show.rownames = FALSE, # Para añadir una columna con el nombre de columna del 
+                         # data frame
+  show.footnote = TRUE, # Muestra el pie de nota
+  digits = 2, # Los valores de la tabla son redondiados a 2 decimales
+  file ="results/mRNA_expr_summary.doc") # Para guardar la tabla en cualquier 
+                                         # formato, en este caso .doc
 
 ```
 
@@ -173,8 +184,7 @@ Para esta pregunta tiene que utilizar la data ```df_long```.
 ```{r}
 # Escriba el código para crear la función tcga_boxplots
 
-library(dplyr)
-
+# Para este ejercicio se emplea la siguiente librería
 library(ggplot2)
 
 #Se crea la funcion de resolucion
@@ -191,10 +201,17 @@ tcga_boxplots <- function(data){
 ```{r list_boxplots}
 # Escriba el código para generar la lista. 
 
+# Para tomar cada dato del dataset previamente se debe hacer elementos únicos
+# del data.frame
 unicos1 <- unique(df_long$dataset)
+
+# Lista de unicos
 
 print("Los tipos de cancer son:")
 unicos1
+
+# Una vez se genera la lista de unicos se hace un lapply llamando a la funcion
+# anterior, conla que se espera graficar los boxplots
 
 cancertype_boxplots <- lapply(unicos1, tcga_boxplots)
 
@@ -209,15 +226,15 @@ cancertype_boxplots[[3]]
 ```{r boxplot3}
 # Escriba el código para guardar la tercera figura de la lista. 
 
-ggsave("results/boxplot3.png",
-        plot = cancertype_boxplots[[3]],
+ggsave("results/boxplot3.png", # Nombre del archivo a guardar
+        plot = cancertype_boxplots[[3]], # Selecciona la gráfica
         device = NULL,
         path = NULL,
-        scale = 1,
-        width = NA,
-        height = NA,
-        dpi = 300,
-        limitsize = TRUE,
+        scale = 1, # Se selecciona la escala
+        width = NA, # Ancho
+        height = NA, # Largo
+        dpi = 300, # Se selecciona la definicion de la figura
+        limitsize = TRUE, # Limites 
         bg = NULL)
 
 
@@ -229,15 +246,32 @@ ggsave("results/boxplot3.png",
 ```{r reg_gen_exp}
 # Escriba aquí su función reg_gen_expression
 
+#El resultado previo se lo inicializa, para hacer genes únicos 
+# de un tipo de cancer
 genes_cancer <- cancertype_boxplots[[3]]
 
+#Función reg_gen_expression
 reg_gen_expression <- function(genes_cancer){
+  # Se selecciona los dos genes a comparar
   comparacion_gen_1 = genes_cancer[1]
   comparacion_gen_2 = genes_cancer[2]
+  # Se filtran, nuevamente, los datos del data.frame
+  # para obtener genes y compararlos despues
+  # Se filtra la data convertida con ayuda de %>%
   filtro_comparacion_gen_1 <- df_long %>% filter (gen == comparacion_gen_1)
   filtro_comparacion_gen_2 <- df_long %>% filter (gen == comparacion_gen_2)
-  filtro_comparacion_gen_Total <- cbind(filtro_comparacion_gen_1,filtro_comparacion_gen_2)
-  filtro_comparacion_gen_Total_tibble <- tibble("dataset" = filtro_comparacion_gen_Total[,1], "gen1" = filtro_comparacion_gen_Total[,3], "gen2" = filtro_comparacion_gen_Total[,6])
+  
+  #Se guarda el filtro en un data.frame para graficarlos
+  filtro_comparacion_gen_Total <- cbind(filtro_comparacion_gen_1,
+                                        filtro_comparacion_gen_2)
+  
+  #Tible modifica las datas y mejora el grafico
+  filtro_comparacion_gen_Total_tibble <- tibble(
+    "dataset" = filtro_comparacion_gen_Total[,1], 
+    "gen1" = filtro_comparacion_gen_Total[,3], 
+    "gen2" = filtro_comparacion_gen_Total[,6])
+  
+  #Finalemente, se une todo y graficae grafica
   gen_box_reg <- filtro_comparacion_gen_Total_tibble %>% 
                 ggplot(aes(x = gen1, y = gen2, color = dataset)) + 
                 geom_point(size = 2) + 
